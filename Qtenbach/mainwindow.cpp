@@ -27,6 +27,6 @@ void MainWindow::on_sendButton_clicked()
     QString QsongPath=ui->songPath->text();
     char *songPath = QsongPath.toLatin1().data();
     char* queueSongcmd;
-    sprintf(queueSongcmd,"mplayer '%s'", songPath);
+    sprintf(queueSongcmd,"gbr '%s'", songPath);
     system(queueSongcmd);
 }
