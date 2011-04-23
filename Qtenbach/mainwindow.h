@@ -19,6 +19,8 @@ private:
     Ui::MainWindow *ui;
 
 private slots:
+    void on_rmQueue_clicked();
+    void on_dispQueue_clicked();
     void on_sendButton_clicked();
     void on_loadButton_clicked();
 };
