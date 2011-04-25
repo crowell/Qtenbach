@@ -3,6 +3,9 @@
 #include <cstring>
 #include <QFileDialog>
 #include <QProcess>
+#include <QMessageBox>
+#include <string>
+#include <iostream>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -35,8 +38,17 @@ void MainWindow::on_sendButton_clicked()
 
 void MainWindow::on_dispQueue_clicked()
 {
-    QProcess dispQueue;
-    dispQueue.execute("xterm -hold -e gbq");
+    QProcess *myProcess = new QProcess(this);
+    myProcess->start("gbq");
+    myProcess->waitForFinished();
+    //qDebug() << "Unlock Output:" << myProcess->readAll();
+    QString hello=myProcess->readAllStandardOutput();
+    char* newDatachar=hello.toLatin1().data();
+    QMessageBox msg;
+    //newDatachar = (char*)newData;
+    msg.setText(newDatachar);
+    msg.exec();
+
 }
 
 void MainWindow::on_rmQueue_clicked()
@@ -44,7 +56,7 @@ void MainWindow::on_rmQueue_clicked()
     QString Qkiller=ui->pid2kill->text();
     char* process = Qkiller.toLatin1().data();
     char* Qkillercmd;
-    sprintf(Qkillercmd, "gbrm %s", process);
+    sprintf(Qkillercmd,"gbrm \"%s", process);
     QProcess rmfromQ;
     rmfromQ.execute(Qkillercmd);
 }
